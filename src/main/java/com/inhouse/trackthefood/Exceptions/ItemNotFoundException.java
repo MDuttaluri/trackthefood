@@ -1,4 +1,4 @@
-package com.inhouse.trackthefood.Exceptions;
+package com.inhouse.trackthefood.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

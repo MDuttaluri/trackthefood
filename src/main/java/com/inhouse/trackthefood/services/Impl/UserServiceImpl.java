@@ -3,9 +3,9 @@ package com.inhouse.trackthefood.services.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.inhouse.trackthefood.Exceptions.UserNotFoundException;
 import com.inhouse.trackthefood.entities.Log;
 import com.inhouse.trackthefood.entities.User;
+import com.inhouse.trackthefood.exceptions.UserNotFoundException;
 import com.inhouse.trackthefood.repositories.UserRepository;
 import com.inhouse.trackthefood.services.UserService;
 

@@ -10,10 +10,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inhouse.trackthefood.Exceptions.ItemNotFoundException;
-import com.inhouse.trackthefood.Exceptions.LogNotFoundException;
-import com.inhouse.trackthefood.Exceptions.UserNotFoundException;
 import com.inhouse.trackthefood.entities.Item;
+import com.inhouse.trackthefood.exceptions.ItemNotFoundException;
+import com.inhouse.trackthefood.exceptions.LogNotFoundException;
+import com.inhouse.trackthefood.exceptions.UserNotFoundException;
 import com.inhouse.trackthefood.services.Impl.ItemServiceImpl;
 
 import jakarta.validation.Valid;

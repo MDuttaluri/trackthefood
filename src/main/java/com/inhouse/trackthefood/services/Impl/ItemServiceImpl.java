@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.inhouse.trackthefood.Exceptions.ItemNotFoundException;
 import com.inhouse.trackthefood.entities.Item;
+import com.inhouse.trackthefood.exceptions.ItemNotFoundException;
 import com.inhouse.trackthefood.repositories.ItemRepository;
 import com.inhouse.trackthefood.services.ItemService;
 

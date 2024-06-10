@@ -3,8 +3,8 @@ package com.inhouse.trackthefood.services.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.inhouse.trackthefood.Exceptions.LogNotFoundException;
 import com.inhouse.trackthefood.entities.Log;
+import com.inhouse.trackthefood.exceptions.LogNotFoundException;
 import com.inhouse.trackthefood.repositories.LogRepository;
 import com.inhouse.trackthefood.services.LogService;
 

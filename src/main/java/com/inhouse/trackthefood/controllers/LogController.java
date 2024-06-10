@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inhouse.trackthefood.Exceptions.ItemNotFoundException;
-import com.inhouse.trackthefood.Exceptions.LogNotFoundException;
-import com.inhouse.trackthefood.Exceptions.UserNotFoundException;
 import com.inhouse.trackthefood.entities.Log;
+import com.inhouse.trackthefood.exceptions.ItemNotFoundException;
+import com.inhouse.trackthefood.exceptions.LogNotFoundException;
+import com.inhouse.trackthefood.exceptions.UserNotFoundException;
 import com.inhouse.trackthefood.services.Impl.LogServiceImpl;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
