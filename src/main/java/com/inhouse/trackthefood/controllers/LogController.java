@@ -16,10 +16,15 @@ import com.inhouse.trackthefood.exceptions.LogNotFoundException;
 import com.inhouse.trackthefood.exceptions.UserNotFoundException;
 import com.inhouse.trackthefood.services.Impl.LogServiceImpl;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
@@ -34,17 +39,24 @@ public class LogController {
         return logServiceImpl.getLog(id);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({MethodArgumentNotValidException.class, UserNotFoundException.class, ItemNotFoundException.class, LogNotFoundException.class})
-    public Map<String, String> handleValidationExceptions(
-    MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
+    @PostMapping("/update/{id}")
+    public Log postMethodName(@Valid @RequestBody Log log, @PathVariable long id) {
+        log.setId(id);
+        return logServiceImpl.addLog(log);
     }
+    
+
+    // @ResponseStatus(HttpStatus.BAD_REQUEST)
+    // @ExceptionHandler({MethodArgumentNotValidException.class, UserNotFoundException.class, ItemNotFoundException.class, LogNotFoundException.class})
+    // public Map<String, String> handleValidationExceptions(
+    // MethodArgumentNotValidException ex) {
+    //     Map<String, String> errors = new HashMap<>();
+    //     ex.getBindingResult().getAllErrors().forEach((error) -> {
+    //         String fieldName = ((FieldError) error).getField();
+    //         String errorMessage = error.getDefaultMessage();
+    //         errors.put(fieldName, errorMessage);
+    //     });
+    //     return errors;
+    // }
     
 }

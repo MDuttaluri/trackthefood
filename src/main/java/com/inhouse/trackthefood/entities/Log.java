@@ -1,5 +1,7 @@
 package com.inhouse.trackthefood.entities;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -31,4 +33,6 @@ public class Log {
     int servings[];
 
     int total_cals;
+
+    Date date;
 }
