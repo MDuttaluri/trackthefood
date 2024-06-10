@@ -27,10 +27,10 @@ public class User {
     @NotBlank(message = "mail field is mandatory for user.")
     String mail;
     
-    int height;
-    int weight;
+    float height; // Centimeters
+    float weight; // Kgs
     int age;
-    int bmi;
+    float bmi;
     int bmr;
     ArrayList<Long> logs;
 

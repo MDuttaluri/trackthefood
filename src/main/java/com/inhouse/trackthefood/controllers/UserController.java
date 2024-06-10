@@ -2,11 +2,9 @@ package com.inhouse.trackthefood.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.inhouse.trackthefood.Helpers.UserHelper;
 import com.inhouse.trackthefood.entities.Log;
 import com.inhouse.trackthefood.entities.User;
-import com.inhouse.trackthefood.exceptions.ItemNotFoundException;
-import com.inhouse.trackthefood.exceptions.LogNotFoundException;
-import com.inhouse.trackthefood.exceptions.UserNotFoundException;
 import com.inhouse.trackthefood.services.Impl.LogServiceImpl;
 import com.inhouse.trackthefood.services.Impl.UserServiceImpl;
 
@@ -16,16 +14,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -40,19 +36,21 @@ public class UserController {
         @Autowired
         LogServiceImpl logServiceImpl;
 
+        @Autowired
+        UserHelper userHelper;
 
         @GetMapping("/{id}")
-        public User getMethodName(@PathVariable long id) {
+        public User getUser(@PathVariable long id) {
             return userServiceImpl.getUser(id);
         }
 
         @PostMapping("/join")
-        public User postMethodName(@Valid @RequestBody User user) {
+        public User joinUser(@Valid @RequestBody User user) {
             return userServiceImpl.addUser(user);
         }
 
         @PostMapping("/log")
-        public Log postMethodName(@Valid @RequestBody Log log) {
+        public Log addNewLog(@Valid @RequestBody Log log) {
             /* Accepts a log object, Returns the same
              * 1. Fetch user from this log
              * 2. Add this log id to the user
@@ -66,18 +64,37 @@ public class UserController {
             return log;
         }
 
-        // @ResponseStatus(HttpStatus.BAD_REQUEST)
-        // @ExceptionHandler({MethodArgumentNotValidException.class, UserNotFoundException.class, ItemNotFoundException.class, LogNotFoundException.class})
-        // public Map<String, String> handleValidationExceptions(
-        // MethodArgumentNotValidException ex) {
-        //     Map<String, String> errors = new HashMap<>();
-        //     ex.getBindingResult().getAllErrors().forEach((error) -> {
-        //         String fieldName = ((FieldError) error).getField();
-        //         String errorMessage = error.getDefaultMessage();
-        //         errors.put(fieldName, errorMessage);
-        //     });
-        //     return errors;
-        // }
+        
+        @GetMapping("/bmr")
+        public ResponseEntity<Integer> getBMR(@RequestParam int age, @RequestParam float weight, @RequestParam float height) {
+            return ResponseEntity.ok(userHelper.calculateBMR(age, height, weight));
+        }
+
+        @GetMapping("/bmi")
+        public Map<String, Object> getBMI(@RequestParam int age, @RequestParam float weight, @RequestParam float height) {
+            return userHelper.calculateBMI(age, height, weight);
+        }
+
+        @GetMapping("/bmr/{id}")
+        public ResponseEntity<Integer> getBMR2(@PathVariable long id) {
+            User user = userServiceImpl.getUser(id);
+            int age = user.getAge();
+            float weight = user.getWeight();
+            float height = user.getHeight();
+
+            return ResponseEntity.ok(userHelper.calculateBMR(age, height, weight));
+        }
+
+        @GetMapping("/bmi/{id}")
+        public Map<String, Object> getBMI2(@PathVariable long id) {
+            User user = userServiceImpl.getUser(id);
+            int age = user.getAge();
+            float weight = user.getWeight();
+            float height = user.getHeight();
+            return userHelper.calculateBMI(age, height, weight);
+        }
+        
+
         
         
         
