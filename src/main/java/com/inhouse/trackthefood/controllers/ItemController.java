@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 @RestController
 @RequestMapping(path = "/item")
 public class ItemController {
@@ -40,8 +38,5 @@ public class ItemController {
     public List<Item> getMethodName(@PathVariable String name) {
         return itemServiceImpl.getItemByName(name);
     }
-    
-    
-    
-    
+
 }

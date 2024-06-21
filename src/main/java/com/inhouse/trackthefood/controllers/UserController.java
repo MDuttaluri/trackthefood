@@ -5,11 +5,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.inhouse.trackthefood.Helpers.UserHelper;
 import com.inhouse.trackthefood.entities.Log;
 import com.inhouse.trackthefood.entities.User;
+import com.inhouse.trackthefood.entities.Weight;
 import com.inhouse.trackthefood.services.Impl.LogServiceImpl;
 import com.inhouse.trackthefood.services.Impl.UserServiceImpl;
+import com.inhouse.trackthefood.services.Impl.WeightServiceImpl;
 
 import jakarta.validation.Valid;
 
+import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +44,9 @@ public class UserController {
         @Autowired
         UserHelper userHelper;
 
+        @Autowired
+        WeightServiceImpl weightServiceImpl;
+
         @GetMapping("/{id}")
         public User getUser(@PathVariable long id) {
             return userServiceImpl.getUser(id);
@@ -46,8 +54,29 @@ public class UserController {
 
         @PostMapping("/join")
         public User joinUser(@Valid @RequestBody User user) {
-            return userServiceImpl.addUser(user);
+            user = userHelper.handleUserWeightUpdate(userServiceImpl.addUser(user));
+            Weight weight = new Weight();
+            weight.setDate(new Date(Instant.now().toEpochMilli()));
+            weight.setUserId(user.getId());
+            weight.setWeight(user.getWeight());
+            weightServiceImpl.addWeight(weight);
+            return user;
         }
+
+        @PostMapping("/updateWeight/{id}")
+        public User updateWeight(@PathVariable long id, @RequestBody float weight) {
+            User user = userServiceImpl.getUser(id);
+            user.setWeight(weight);
+            return userHelper.handleUserWeightUpdate(user);            
+        }
+        
+
+        @PostMapping("/update/{id}")
+        public User postMethodName(@RequestBody User user, @PathVariable long id) {
+            user.setId(id);
+            return userServiceImpl.addUser(user);            
+        }
+        
 
         @PostMapping("/log")
         public Log addNewLog(@Valid @RequestBody Log log) {

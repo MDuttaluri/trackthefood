@@ -30,9 +30,19 @@ public class LogController {
     }
 
     @PostMapping("/update/{id}")
-    public Log postMethodName(@Valid @RequestBody Log log, @PathVariable long id) {
+    public Log updateLog(@Valid @RequestBody Log log, @PathVariable long id) {
         log.setId(id);
         return logServiceImpl.addLog(log);
+    }
+    
+
+    @PostMapping("/add")
+    public Log addLog(@RequestBody Log log) {
+        System.out.println(log.toString());
+        
+        return logServiceImpl.addLog(log);
+        // return log;
+        
     }
     
 

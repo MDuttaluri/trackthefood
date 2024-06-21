@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
+import com.inhouse.trackthefood.entities.User;
+
 @Service
 public class UserHelper {
     public HashMap<String, Object> calculateBMI(int age, float height, float weight){
@@ -33,4 +35,10 @@ public class UserHelper {
         return  (int)(66.4730 + 13.7516 * weight + 5.0033 * height - 6.7550 * age);
     }
 
+
+    public User handleUserWeightUpdate(User user){
+        user.setBmi((float) this.calculateBMI(user.getAge(), user.getHeight(), user.getWeight()).get("BMI"));
+        user.setBmr(this.calculateBMR(user.getAge(), user.getHeight(), user.getWeight()));
+        return user;
+    }
 }
